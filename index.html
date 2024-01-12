@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bilderkennung</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+	background: white;
+}
+
+#webcam {
+    width: 100%;
+    height: auto;
+}
+
+#canvas {
+    width: 100%;
+    height: auto;
+    display: none;
+}
+
+#caption {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #333;
+}
+
+#selectBreedButton {
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: none;
+}
+
+#recentSearches {
+    margin-top: 20px;
+}
+
+#recentSearches li {
+    margin-bottom: 10px;
+}
+
+#recentSearches button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#loadingModal {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    cursor: pointer;
+}
+
+#loadingModalContent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fefefe;
+    padding: 20px;
+    border-radius: 5px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+}
+    .detected-breed {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 0, 0, 0.9);
+        color: #FFFF00;
+        padding: 20px;
+        border-radius: 5px;
+        font-size: 2em;
+    }
+	
+</style>
+
+</head>
+<body>
+	<div id="loadingModal">
+    <div id="loadingModalContent">
+        <p>Cargando modelo, por favor espera...</p>
+    </div>
+</div>
+  
+    <h4>Apunta tu cámara hacia un perro para conocer su raza.</h4>
+
+    <video id="webcam" autoplay playsinline muted></video>
+
+    <canvas id="canvas"></canvas>
+
+    <div id="caption" class="detected-breed"></div>
+    <button id="selectBreedButton" style="display: none;">Seleccionar</button>
+    <h2>Seleciones </h2>
+    <ul id="recentSearches"></ul>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.2.0/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@2.1.0/dist/mobilenet.min.js"></script>
+<script>
+    let model;
+    let recentSearches = [];
+    let selectTimeout;
+	 let isProcessing = false;
+
+async function init() {
+    // Mostrar el modal de carga
+    document.getElementById('loadingModal').style.display = 'block';
+    
+    model = await mobilenet.load({version: 2, alpha: 1.0, language: 'de'});
+    console.log('Model loaded');
+    
+    // Ocultar el modal de carga
+    document.getElementById('loadingModal').style.display = 'none';
+
+    const video = document.getElementById('webcam');
+    const selectButton = document.getElementById('selectBreedButton');
+    const constraints = {
+        audio: false,
+        video: {
+            facingMode: "environment"
+        }
+    };
+    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+    video.srcObject = stream;
+    video.onloadedmetadata = () => {
+        video.play();
+        selectButton.style.display = 'block';
+        analyzeImage();
+    }
+    selectButton.addEventListener('click', addSearch);
+}
+
+
+ async function analyzeImage() {
+        if (isProcessing) return;
+
+        isProcessing = true;  // Marcamos como que estamos procesando
+        const videoElement = document.getElementById('webcam');
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+        context.drawImage(videoElement, 0, 0, videoElement.videoWidth, videoElement.videoHeight, 0, 0, canvas.width, canvas.height);
+        const result = await model.classify(canvas);
+
+        const captionElement = document.getElementById('caption');
+        const breed = result[0].className;
+        captionElement.innerText = breed;
+
+        // Añadimos un retardo de 1 segundo (1000 milisegundos) antes de procesar la siguiente imagen
+        setTimeout(() => {
+            isProcessing = false;  // Después de un segundo, marcamos como que hemos terminado de procesar
+            requestAnimationFrame(analyzeImage);
+        }, 1000);
+    }
+
+function addSearch() {
+    const captionElement = document.getElementById('caption');
+    const breed = captionElement.innerText;
+
+    const recentSearchesElement = document.getElementById('recentSearches');
+    recentSearches.push(breed);
+    if (recentSearches.length > 5) {
+        recentSearches.shift();
+    }
+    recentSearchesElement.innerHTML = '';
+    for (const search of recentSearches) {
+        const li = document.createElement('li');
+        li.innerText = search;
+        const infoButton = document.createElement('button');
+        infoButton.innerText = 'Info';
+        infoButton.onclick = () => window.open(`https://www.google.com/search?q=${search}`, '_blank');
+        const imagesButton = document.createElement('button');
+        imagesButton.innerText = 'Images';
+        imagesButton.onclick = () => window.open(`https://www.google.com/search?q=${search}&tbm=isch`, '_blank');
+        li.appendChild(infoButton);
+        li.appendChild(imagesButton);
+        recentSearchesElement.appendChild(li);
+    }
+
+    // Autoscroll al historial
+    document.getElementById('recentSearches').scrollIntoView({behavior: "smooth"});
+}
+
+
+window.onload = init;
+</script>
+</body>
+</html>
+

@@ -1,354 +1,90 @@
-/* Estilos generales */
-
 body {
     font-family: Arial, sans-serif;
-    background-color: #dbe2e3;
-    margin: 0;
-    padding: 0;
-    margin-top: -40px;
+	background: white;
 }
 
-/* Estilos del encabezado */
-
-h1 {
-    text-align: center;
-    margin-top: 50px;
-    margin-bottom: 30px;
-    font-family: 'Alata';
-    color: #4897a1;
-    text-transform: uppercase;
-    font-size: 25px;
-    background: linear-gradient(to right, #673ab7, #ffc371);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+#webcam {
+    width: 100%;
+    height: auto;
 }
 
-/* Estilos del contenedor */
-
-.container {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 30px;
-}
-
-/* Estilos del botón */
-
-.button {
-    background-color: #437ba9;
-    color: #73fff2;
-    border: none;
-    border-radius: 50px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    margin-right: 10px;
-    font-family: alata;
-    margin-top: 5px;
-}
-
-/* Estilos del input */
-
-.input {
-  display: none;
-}
-
-/* Estilos del contenedor de la imagen */
-
-.image-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 300px;
-  margin-bottom: 30px;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.image-container img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
-
-/* Estilos de la leyenda */
-
-.caption {
-    text-align: center;
-    margin-bottom: 30px;
-    font-family: 'Alata';
-    font-size: 26px;
-    color: #009688;
-    margin-top: -20px;
-    background-color: #f1f1f1;
-    padding-bottom: 30px;
-    padding-top: 10px;
-    display: block;
-    margin: auto;
-}
-
-/* Estilos de la lista de búsquedas recientes */
-
-.recent-searches-title {
-  font-size: 18px;
-  margin-bottom: 10px;
-}
-
-.recent-searches {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-  color: #818181;
-}
-
-.recent-searches li {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #6e6e6e;
-  border-radius: 20px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  padding: 10px;
-  margin-bottom: 10px;
-}
-
-.recent-searches li span {
-  flex-grow: 1;
-}
-
-.more-info {
-    background-color: #F44336;
-    color: #fff;
-    border: none;
-    border-radius: 20px;
-    padding: 5px 10px;
-    font-size: 14px;
-    cursor: pointer;
-    box-shadow: 0px 2px 2px rgb(0 0 0 / 25%);
-    color: white;
-    font-family: 'Alata';
-    display: flex;
-    margin: auto;
-    margin-top: 10px;
-}
-
-.recent-searches-title {
-    font-size: 23px;
-    margin-bottom: 10px;
-    font-family: alata;
-    margin-left: 10px;
-    color: #009688;
-    text-align: center;
-    text-decoration: underline;
-}
-.more-info {
-    background-color: #00bcd4;
-    color: #fff;
-    border: none;
-    border-radius: 20px;
-    padding: 5px 10px;
-    font-size: 14px;
-    cursor: pointer;
-    box-shadow: 0px 2px 2px rgb(0 0 0 / 25%);
-    color: black;
-    font-family: 'Alata';
-}
-i.fas.fa-camera {
-    text-transform: uppercase;
-    font-family: 'Acme';
-}
-.more-info {
-    background-color: #00bcd4;
-    color: #fff;
-    border: none;
-    border-radius: 20px;
-    padding: 5px 10px;
-    font-size: 14px;
-    cursor: pointer;
-    box-shadow: 0px 2px 2px rgb(0 0 0 / 25%);
-    color: black;
-    font-family: 'Alata';
-    display: flex;
-    margin: auto;
-    margin-top: 10px;
-}
-.recent-searches li span {
-    flex-grow: 1;
-    font-size: 17px;
-    font-family: 'Alata';
-    color: #2391a0;
-}
-p {
-    text-align: center;
-    font-family: alata;
-    font-size: 15px;
-    color: #ebebeb;
-    margin-top: 60px;
-    position: fixed;
-    background-color: #0d648b;
-    z-index: 10;
-    scroll-padding-bottom: 30px;
-    display: block;
-    bottom: 450px;
-    font-weight: bold;
-    padding-top: 40px;
-    padding-bottom: 40px;
-}
-img.icono {
-    background-image: url(ruta/de/la/imagen.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    opacity: 0.9;
-    width: 40%;
-    border-radius: 10px;
-    display: block;
-    margin: auto;
-    margin-bottom: 10px;
-}
-button.close-btn {
+#canvas {
+    width: 100%;
+    height: auto;
     display: none;
 }
-.message-box {
-    background-color: #2f2f2f;
-    padding-top: 10px;
-    border-radius: 20px;
-   padding-bottom: 10px;
-}
-.image-container img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    border-radius: 10px;
 
-}
-.recent-searches li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #08a4b800;
-    border-radius: 0px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    padding: 10px;
-    margin-bottom: 10px;
-}
-.more-info {
-    background-color: #c44e7600;
-    color: #fff;
-    border: none;
-    border-radius: 20px;
-    padding: 5px 10px;
-    font-size: 14px;
-    cursor: pointer;
-    box-shadow: 0px 2px 2px rgb(0 0 0 / 25%);
-    color: #FF5722;
-    font-family: 'Alata';
-    display: flex;
-    margin: auto;
+#caption {
     margin-top: 10px;
-}
-.notification {
-    position: fixed;
-    bottom: 48px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #088e9f;
-    color: #ffffff;
-    padding: 12px 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-    font-size: 16px;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s, visibility 0.3s;
-    text-align: center;
-    font-size: 21px;
-    font-family: 'Alata';
+    font-size: 18px;
+    color: #333;
 }
 
-.notification.show {
-  opacity: 1;
-  visibility: visible;
-}
-img {
-    background-image: url(ruta/de/la/imagen.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    opacity: 0.9;
-    width: 100%;
-    border-radius: 10px;
+#selectBreedButton {
     margin-top: 10px;
-}
-body {
-    font-family: Arial, sans-serif;
-    background-color: #fff4e7;
-    margin: 0;
-    padding: 0;
-    margin-top: 0px;
-}
-.caption {
-    text-align: center;
-    margin-bottom: 30px;
-    font-family: 'Alata';
-    font-size: 26px;
-    color: #414141;
-    margin-top: -20px;
-    background-color: #f1f1f100;
-    padding-bottom: 30px;
-    padding-top: 10px;
-    display: block;
-    margin: auto;
-}
-.button {
-    background-color: #009688;
-    color: #ffffff;
-    border: none;
-    border-radius: 50px;
     padding: 10px 20px;
-    font-size: 16px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    margin-right: 10px;
-    font-family: alata;
+    display: none;
+}
+
+#recentSearches {
     margin-top: 20px;
 }
-.fa-circle-info:before, .fa-info-circle:before {
-    content: "\f05a";
-    margin: 10px;
-    color: #009688;
-    font-size: 18px;
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    z-index: 100;
-}
-.fa-camera-alt:before, .fa-camera:before {
-    content: "\f030";
-    font-size: 23px;
-}
-h4 {
-    font-family: 'Alata';
-    text-align: center;
-    font-size: 15px;
-    color: #607D8B;
-}
-h1 {
-    text-align: center;
-    margin-top: 50px;
-    margin-bottom: 30px;
-    font-family: 'Alata';
-    color: #4897a1;
-    font-size: 21px;
-    background: linear-gradient(to right, #673ab7, #ffc371);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-.recent-searches-title {
-    font-size: 23px;
+
+#recentSearches li {
     margin-bottom: 10px;
-    font-family: alata;
-    margin-left: 10px;
-    color: #4c5150;
-    text-align: center;
-    text-decoration: underline;
 }
+
+#recentSearches button {
+    margin-left: 10px;
+    padding: 5px 10px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#loadingModal {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    cursor: pointer;
+}
+
+#loadingModalContent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fefefe;
+    padding: 20px;
+    border-radius: 5px;
+    width: 80%;
+    max-width: 400px;
+    text-align: center;
+}
+    .detected-breed {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 0, 0, 0.9);
+        color: #FFFF00;
+        padding: 20px;
+        border-radius: 5px;
+        font-size: 2em;
+    }

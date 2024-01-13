@@ -1,118 +1,32 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+     <meta name="theme-color" content="white">
     <title>Bilderkennung</title>
-<style>
-body {
-    font-family: Arial, sans-serif;
-	background: white;
-}
-
-#webcam {
-    width: 100%;
-    height: auto;
-}
-
-#canvas {
-    width: 100%;
-    height: auto;
-    display: none;
-}
-
-#caption {
-    margin-top: 10px;
-    font-size: 18px;
-    color: #333;
-}
-
-#selectBreedButton {
-    margin-top: 10px;
-    padding: 10px 20px;
-    font-size: 18px;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    display: none;
-}
-
-#recentSearches {
-    margin-top: 20px;
-}
-
-#recentSearches li {
-    margin-bottom: 10px;
-}
-
-#recentSearches button {
-    margin-left: 10px;
-    padding: 5px 10px;
-    font-size: 14px;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-#loadingModal {
-    position: fixed;
-    display: none;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.5);
-    z-index: 2;
-    cursor: pointer;
-}
-
-#loadingModalContent {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fefefe;
-    padding: 20px;
-    border-radius: 5px;
-    width: 80%;
-    max-width: 400px;
-    text-align: center;
-}
-    .detected-breed {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: rgba(0, 0, 0, 0.9);
-        color: #FFFF00;
-        padding: 20px;
-        border-radius: 5px;
-        font-size: 2em;
-    }
-	
-</style>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, minimum-scale=1.0">
+    <!-- Google Fonts Link For Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 	<div id="loadingModal">
     <div id="loadingModalContent">
-        <p>Cargando modelo, por favor espera...</p>
+        <p>Loading model, please wait...</p>
     </div>
 </div>
   
-    <h4>Apunta tu cámara hacia un perro para conocer su raza.</h4>
+    <h4>Point the camera at any thing to know what it is:</h4>
 
     <video id="webcam" autoplay playsinline muted></video>
 
     <canvas id="canvas"></canvas>
 
     <div id="caption" class="detected-breed"></div>
-    <button id="selectBreedButton" style="display: none;">Seleccionar</button>
-    <h2>Seleciones </h2>
+    <button id="selectBreedButton" style="display: none;">Select</button>
+    <h2 id="selectionsTitle">Selections</h2>
     <ul id="recentSearches"></ul>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -123,6 +37,7 @@ body {
     let recentSearches = [];
     let selectTimeout;
 	 let isProcessing = false;
+document.getElementById('selectionsTitle').style.display = 'none';
 
 async function init() {
     // Mostrar el modal de carga
@@ -167,9 +82,9 @@ async function init() {
         const breed = result[0].className;
         captionElement.innerText = breed;
 
-        // Añadimos un retardo de 1 segundo (1000 milisegundos) antes de procesar la siguiente imagen
+        //We add a delay of 1 second (1000 milliseconds) before processing the next image
         setTimeout(() => {
-            isProcessing = false;  // Después de un segundo, marcamos como que hemos terminado de procesar
+            isProcessing = false;  // After one second, we mark that we have finished processing
             requestAnimationFrame(analyzeImage);
         }, 1000);
     }
@@ -183,6 +98,7 @@ function addSearch() {
     if (recentSearches.length > 5) {
         recentSearches.shift();
     }
+
     recentSearchesElement.innerHTML = '';
     for (const search of recentSearches) {
         const li = document.createElement('li');
@@ -200,11 +116,21 @@ function addSearch() {
 
     // Autoscroll al historial
     document.getElementById('recentSearches').scrollIntoView({behavior: "smooth"});
+
+    // Actualiza la visibilidad del título 'Selections'
+    const selectionsTitle = document.getElementById('selectionsTitle');
+    if (recentSearches.length > 0) {
+        selectionsTitle.style.display = 'block';
+    } else {
+        selectionsTitle.style.display = 'none';
+    }
 }
+
 
 
 window.onload = init;
 </script>
 </body>
 </html>
+
 

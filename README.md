@@ -35,3 +35,5 @@ Acknowledgments
 
 TensorFlow.js and MobileNet for making object detection possible.
 To all contributors participating in this project.
+
+![Project screenshot]([https://path/to/your/repository/images/screenshot.png](https://app.hundezonen.ch/docs/IMG_0097.PNG)https://app.hundezonen.ch/docs/IMG_0097.PNG)
